@@ -23,7 +23,7 @@ app.use(
 			maxAge: 30000,
 		},
 		resave: true,
-    	saveUninitialized: true
+		saveUninitialized: true
 	})
 );
 
