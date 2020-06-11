@@ -1,0 +1,61 @@
+<%- include('../../partials/header.ejs') %> <%-
+include('../../partials/navbar.ejs') %>
+
+<div class="container">
+	<hr />
+	<h2>Categorias</h2>
+	<a class="btn btn-success" href="/admin/categories/new"
+		>Criar nova categoria</a
+	>
+	<hr />
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Título</th>
+				<th>Slug</th>
+				<th style="width: 168px;">Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% categories.forEach(category => { %>
+			<tr>
+				<td><%= category.id %></td>
+				<td><%= category.title %></td>
+				<td><%= category.slug %></td>
+				<td>
+					<a class="btn btn-warning" href="/admin/categories/edit/<%= category.id %>">Editar</a>
+					<form
+						action="/categories/delete"
+						method="POST"
+						style="display: inline;"
+						onsubmit="confirmarExclusao(event, this)"
+					>
+						<input
+							type="hidden"
+							name="id"
+							value="<%= category.id %>"
+						/>
+						<button class="btn btn-danger">Excluir</button>
+					</form>
+				</td>
+			</tr>
+			<% }); %>
+		</tbody>
+	</table>
+</div>
+
+<%- include('../../partials/footer.ejs') %>
+
+<script>
+	function confirmarExclusao(event, form) {
+		event.preventDefault();
+		var decision = confirm("Você deseja excluir essa categoria?");
+		if (decision) {
+			console.log("Categoria excluída com sucesso.");
+			form.submit();
+		} else {
+			console.log("O formulário não foi enviado.");
+		}
+	}
+</script>
